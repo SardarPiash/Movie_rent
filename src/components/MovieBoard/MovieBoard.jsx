@@ -4,9 +4,10 @@ import Rating from "./Rating";
 import MovieCover from "../../DynamicUrl/MovieCover";
 import MovieModal from "./MovieModal";
 import { addCartMovie } from "../../contex/AddCartContex";
+import Tag from '../../assets/tag.svg'
 
 export default function MovieBoard() {
-  const [showMovieModal, setMovieModal] = useState(false);
+  const [showMovieModal, setShowMovieModal] = useState(false);
   const [modalMovie, setModalMovie] = useState(null);
   const { addCartMovieDetails, setAddCartMovieDetails } =
     useContext(addCartMovie);
@@ -14,30 +15,32 @@ export default function MovieBoard() {
 
   function handleMovieDetailsModal(movie) {
     setModalMovie(movie);
-    setMovieModal(true);
+    setShowMovieModal(true);
   }
   function handleHideModal() {
-    setMovieModal("");
-    setMovieModal(false);
+    setModalMovie("");
+    setShowMovieModal(false); 
   }
   function handleAddToCart(e, movie) {
     e.stopPropagation();
-    setAddCartMovieDetails([...addCartMovieDetails, movie]);
-    console.log(movie)
+
+    const found = addCartMovieDetails.find(movies=>movies.id === movie.id)
+    if(!found){
+      setAddCartMovieDetails([...addCartMovieDetails, movie]);
+    }else{
+      alert(`Opps!!!${movie.title} is already added to the cart`)
+    }
   }
   return (
     <div>
       {showMovieModal && (
-        <MovieModal onCloseModal={handleHideModal} Movie={modalMovie} />
+        <MovieModal onCloseModal={handleHideModal} Movie={modalMovie} AddToCart={handleAddToCart}/>
       )}
       <div className="content">
         <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-7">
           {movieData.map((movie) => (
-            <a key={movie.id} onClick={() => handleMovieDetailsModal(movie)}>
-              <figure
-                
-                className="p-4 border border-black/10 shadow-sm dark:border-white/10 rounded-xl"
-              >
+            <div key={movie.id} onClick={() => handleMovieDetailsModal(movie)}>
+              <figure className="p-4 border border-black/10 shadow-sm dark:border-white/10 rounded-xl">
                 <img
                   className="w-full object-cover"
                   src={MovieCover(movie.cover)}
@@ -48,18 +51,15 @@ export default function MovieBoard() {
                   <p className="text-[#575A6E] text-sm mb-2">{movie.genre}</p>
 
                   <Rating Rating={movie.rating} />
-                  <a
-                    className="bg-primary rounded-lg py-2 px-5 flex items-center justify-center gap-2 text-[#171923] font-semibold text-sm"
-                    href="#"
-                  >
-                    <img src="./assets/tag.svg" alt="" />
-                    <span onClick={(e) => handleAddToCart(e, movie)}>
+                  <div className="bg-primary rounded-lg py-2 px-5 flex items-center justify-center gap-2 text-[#171923] font-semibold text-sm" onClick={(e) => handleAddToCart(e, movie)}>
+                    <img src={Tag} alt="" />
+                    <span >
                       ${movie.price} | Add to Cart
                     </span>
-                  </a>
+                  </div>
                 </figcaption>
               </figure>
-            </a>
+            </div>
           ))}
         </div>
       </div>

@@ -1,7 +1,7 @@
 import React from "react";
 import MovieCover from "../../DynamicUrl/MovieCover";
-
-export default function MovieModal({ onCloseModal, Movie }) {
+import Tag from '../../assets/tag.svg'
+export default function MovieModal({ onCloseModal, Movie,AddToCart }) {
   return (
     <div className="fixed top-0 left-0 w-screen h-screen z-50 bg-white/60 backdrop-blur-sm">
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[420px] sm:max-w-[600px] lg:max-w-[984px] p-4 max-h-[90vh] overflow-auto">
@@ -24,12 +24,12 @@ export default function MovieModal({ onCloseModal, Movie }) {
             <p className="text-sm lg:text-base mb-8 lg:mb-16">
               {Movie.description}
             </p>
-            <div className="grid lg:grid-cols-2 gap-2">
+            <div className="grid lg:grid-cols-2 gap-2" >
               <a
                 className="bg-primary rounded-lg py-2 px-5 flex items-center justify-center gap-2 text-[#171923] font-semibold text-sm"
-                href="#"
+                href="#" onClick={(e)=>AddToCart(e,Movie)}
               >
-                <img src="./assets/tag.svg" alt="" />
+                <img src={Tag} alt="" />
                 <span>${Movie.price} | Add to Cart</span>
               </a>
               <a
