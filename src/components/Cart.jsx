@@ -6,11 +6,14 @@ import Checkout from '../assets/icons/checkout.svg'
 import { toast } from 'react-toastify'
 
 export default function Cart({ onClose }) {
-  const { addCartMovieDetails, setAddCartMovieDetails } = useContext(addCartMovie)
+  const { state, dispatch } = useContext(addCartMovie)
 
-  function handleRemoveItem(ID,movie) {
-    const newCartItem = addCartMovieDetails.filter(item => item.id !== ID)
-    setAddCartMovieDetails(newCartItem)
+  function handleRemoveItem(movie) {
+    // const newCartItem = addCartMovieDetails.cartData.filter(item => item.id !== ID)
+    dispatch({
+      type:"Removed_From_Cart",
+      payload:movie
+    })
     toast.success(`${movie.title} is removed from the cart !`, {
       position: "bottom-right",
   });
@@ -21,7 +24,7 @@ export default function Cart({ onClose }) {
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[420px] sm:max-w-[600px] lg:max-w-[790px] p-4 max-h-[90vh] overflow-auto">
         <div className="bg-white shadow-md dark:bg-[#12141D] rounded-2xl overflow-hidden p-5 md:p-9">
           <h2 className="text-2xl lg:text-[30px] mb-10 font-bold">Your Carts</h2>
-          {addCartMovieDetails.length > 0 ? addCartMovieDetails.map(movie => (
+          {state.cartData.length > 0 ? state.cartData.map(movie => (
             <div key={movie.id} className="space-y-8 lg:space-y-12 max-h-[450px] overflow-auto mb-10 lg:mb-14">
               <div className="grid grid-cols-[1fr_auto] gap-4">
                 <div className="flex items-center gap-4">
@@ -43,7 +46,7 @@ export default function Cart({ onClose }) {
                 <div className="flex justify-between gap-4 items-center">
                   <button
                     className="bg-[#D42967] rounded-md p-2 md:px-4 inline-flex items-center space-x-2 text-white"
-                    onClick={() => handleRemoveItem(movie.id,movie)}
+                    onClick={() => handleRemoveItem(movie)}
                   >
                     <img className="w-5 h-5" src={Remove} alt="" />
                     <span className="max-md:hidden">Remove</span>

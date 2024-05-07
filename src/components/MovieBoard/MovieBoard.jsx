@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 export default function MovieBoard() {
   const [showMovieModal, setShowMovieModal] = useState(false);
   const [modalMovie, setModalMovie] = useState(null);
-  const { addCartMovieDetails, setAddCartMovieDetails } =
+  const { state, dispatch } =
     useContext(addCartMovie);
   const movieData = GetData();
 
@@ -26,9 +26,11 @@ export default function MovieBoard() {
   function handleAddToCart(e, movie) {
     e.stopPropagation();
 
-    const found = addCartMovieDetails.find(movies=>movies.id === movie.id)
+    const found = state.cartData.find(movies=>movies.id === movie.id)
     if(!found){
-      setAddCartMovieDetails([...addCartMovieDetails, movie]);
+      dispatch({type:"Add_to_cart",
+      payload:movie});
+
       toast.success(`Added  ${movie.title} to Cart !`, {
         position: "bottom-right",
     });
