@@ -24,11 +24,13 @@
 
 ## How to Run the Application
 
-1. Clone the repository to your local machine.
-2. Navigate to the project directory.
-3. Run `npm install` to install the dependencies.
-4. Run `npm start` to start the development server.
-5. Open your browser and go to `http://localhost:3000` to view the application.
+1.Clone this repository to your local machine: git clone https://github.com/SardarPiash/Movie_rent
+
+2.Navigate to the project directory: cd Movie_rent
+
+3.npm install
+
+4.npm run dev
 
 ## Live Demo
 
