@@ -5,6 +5,8 @@ import MovieCover from "../../DynamicUrl/MovieCover";
 import MovieModal from "./MovieModal";
 import { addCartMovie } from "../../contex/AddCartContex";
 import Tag from '../../assets/tag.svg'
+import { toast } from "react-toastify";
+
 
 export default function MovieBoard() {
   const [showMovieModal, setShowMovieModal] = useState(false);
@@ -27,9 +29,14 @@ export default function MovieBoard() {
     const found = addCartMovieDetails.find(movies=>movies.id === movie.id)
     if(!found){
       setAddCartMovieDetails([...addCartMovieDetails, movie]);
-    }else{
-      alert(`Opps!!!${movie.title} is already added to the cart`)
-    }
+      toast.success(`Added  ${movie.title} to Cart !`, {
+        position: "bottom-right",
+    });
+} else {
+    toast.error( `The movie ${movie.title} has been added to the cart already`, {
+      position: "bottom-right",
+    });
+}
   }
   return (
     <div>

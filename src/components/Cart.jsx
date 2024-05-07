@@ -3,14 +3,17 @@ import { addCartMovie, darkMode } from '../contex/AddCartContex'
 import MovieCover from '../DynamicUrl/MovieCover'
 import Remove from '../assets/delete.svg'
 import Checkout from '../assets/icons/checkout.svg'
+import { toast } from 'react-toastify'
 
 export default function Cart({ onClose }) {
   const { addCartMovieDetails, setAddCartMovieDetails } = useContext(addCartMovie)
-  const { showDarkMode } = useContext(darkMode)
 
-  function handleRemoveItem(ID) {
+  function handleRemoveItem(ID,movie) {
     const newCartItem = addCartMovieDetails.filter(item => item.id !== ID)
     setAddCartMovieDetails(newCartItem)
+    toast.success(`${movie.title} is removed from the cart !`, {
+      position: "bottom-right",
+  });
   }
 
   return (
@@ -40,7 +43,7 @@ export default function Cart({ onClose }) {
                 <div className="flex justify-between gap-4 items-center">
                   <button
                     className="bg-[#D42967] rounded-md p-2 md:px-4 inline-flex items-center space-x-2 text-white"
-                    onClick={() => handleRemoveItem(movie.id)}
+                    onClick={() => handleRemoveItem(movie.id,movie)}
                   >
                     <img className="w-5 h-5" src={Remove} alt="" />
                     <span className="max-md:hidden">Remove</span>
