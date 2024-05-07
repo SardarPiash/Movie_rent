@@ -2,12 +2,14 @@ import { useContext, useState } from "react";
 import Header from "./components/Header";
 import MovieBoard from "./components/MovieBoard/MovieBoard";
 import Sidebar from "./components/Sidebar";
-import { addCartMovie } from "./contex/AddCartContex";
+import { addCartMovie,darkMode } from "./contex/AddCartContex";
 
 export default function App() {
   const [addCartMovieDetails,setAddCartMovieDetails] = useState([]);
+  const [showDarkMode,setShowDarkMode]=useState(false);
   return (
-    <div>
+    <div className={`h-full w-full ${showDarkMode ? "dark" : ""}`} >
+      <darkMode.Provider value={{showDarkMode,setShowDarkMode}} >
       <addCartMovie.Provider value={{addCartMovieDetails,setAddCartMovieDetails}}>
       <Header />
       <main>
@@ -17,6 +19,7 @@ export default function App() {
         </div>
       </main>
       </addCartMovie.Provider>
+      </darkMode.Provider>
     </div>
   );
 }
