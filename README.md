@@ -34,6 +34,6 @@
 
 ## Live Demo
 
-[Movie Rental Application](https://movie-rental-six.vercel.app/)
+[Movie Rental Application](https://movie-rental-alpha.vercel.app/)
 
 
