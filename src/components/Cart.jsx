@@ -9,12 +9,20 @@ export default function Cart({ onClose }) {
   const { state, dispatch } = useContext(addCartMovie)
 
   function handleRemoveItem(movie) {
-    // const newCartItem = addCartMovieDetails.cartData.filter(item => item.id !== ID)
     dispatch({
       type:"Removed_From_Cart",
       payload:movie
     })
     toast.success(`${movie.title} is removed from the cart !`, {
+      position: "bottom-right",
+  });
+  }
+  function handleCheckout(){
+    dispatch({
+      type:"checkout"
+    })
+    onClose()
+    toast.success(`Movies are Checkout.`, {
       position: "bottom-right",
   });
   }
@@ -59,7 +67,7 @@ export default function Cart({ onClose }) {
           <div className="flex items-center justify-end gap-2">
             <a
               className="rounded-md p-2 md:px-4 inline-flex items-center space-x-2 bg-primary text-[#171923] text-sm"
-              href="#"
+              href="#" onClick={handleCheckout}
             >
             <img src={Checkout} width="24" height="24" alt=""/>
               <span>Checkout</span>

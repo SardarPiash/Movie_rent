@@ -8,8 +8,15 @@ export function MovieReducer(state, action) {
       (item) => item.id !== action.payload.id
     );
     return {
-      ...state.cartData,
+      ...state,
       cartData: newmovie,
+    };
+  }
+  else if(action.type === "checkout"){
+    console.log("Checkout");
+    return {
+      ...state,
+      cartData:[]
     };
   }
 }
